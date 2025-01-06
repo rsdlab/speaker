@@ -1,0 +1,54 @@
+# speaker CMake config file
+#
+# This file sets the following variables:
+# speaker_FOUND - Always TRUE.
+# speaker_INCLUDE_DIRS - Directories containing the speaker include files.
+# speaker_IDL_DIRS - Directories containing the speaker IDL files.
+# speaker_LIBRARIES - Libraries needed to use speaker.
+# speaker_DEFINITIONS - Compiler flags for speaker.
+# speaker_VERSION - The version of speaker found.
+# speaker_VERSION_MAJOR - The major version of speaker found.
+# speaker_VERSION_MINOR - The minor version of speaker found.
+# speaker_VERSION_REVISION - The revision version of speaker found.
+# speaker_VERSION_CANDIDATE - The candidate version of speaker found.
+
+message(STATUS "Found speaker-@PROJECT_VERSION@")
+set(speaker_FOUND TRUE)
+
+find_package(<dependency> REQUIRED)
+
+#set(speaker_INCLUDE_DIRS
+#    "@CMAKE_INSTALL_PREFIX@/include/@PROJECT_NAME_LOWER@-@PROJECT_VERSION_MAJOR@"
+#    ${<dependency>_INCLUDE_DIRS}
+#    )
+#
+#set(speaker_IDL_DIRS
+#    "@CMAKE_INSTALL_PREFIX@/include/@PROJECT_NAME_LOWER@-@PROJECT_VERSION_MAJOR@/idl")
+set(speaker_INCLUDE_DIRS
+    "@CMAKE_INSTALL_PREFIX@/include/@CPACK_PACKAGE_FILE_NAME@"
+    ${<dependency>_INCLUDE_DIRS}
+    )
+set(speaker_IDL_DIRS
+    "@CMAKE_INSTALL_PREFIX@/include/@CPACK_PACKAGE_FILE_NAME@/idl")
+
+
+if(WIN32)
+    set(speaker_LIBRARIES
+        "@CMAKE_INSTALL_PREFIX@/@LIB_INSTALL_DIR@/@CMAKE_SHARED_LIBRARY_PREFIX@@PROJECT_NAME_LOWER@@CMAKE_STATIC_LIBRARY_SUFFIX@"
+        ${<dependency>_LIBRARIES}
+        )
+else(WIN32)
+    set(speaker_LIBRARIES
+        "@CMAKE_INSTALL_PREFIX@/@LIB_INSTALL_DIR@/@CMAKE_SHARED_LIBRARY_PREFIX@@PROJECT_NAME_LOWER@@CMAKE_SHARED_LIBRARY_SUFFIX@"
+        ${<dependency>_LIBRARIES}
+        )
+endif(WIN32)
+
+set(speaker_DEFINITIONS ${<dependency>_DEFINITIONS})
+
+set(speaker_VERSION @PROJECT_VERSION@)
+set(speaker_VERSION_MAJOR @PROJECT_VERSION_MAJOR@)
+set(speaker_VERSION_MINOR @PROJECT_VERSION_MINOR@)
+set(speaker_VERSION_REVISION @PROJECT_VERSION_REVISION@)
+set(speaker_VERSION_CANDIDATE @PROJECT_VERSION_CANDIDATE@)
+
